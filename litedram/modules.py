@@ -1093,6 +1093,29 @@ class MTA4ATF51264HZ(DDR4Module):
     }
     speedgrade_timings["default"] = speedgrade_timings["2133"]
 
+class MTA8ATF51264HZ(DDR4Module):
+    # FBCG code : D9TGG
+    # Component : MT40A512M8RH-083E:B
+    # https://www.digikey.com/en/products/detail/micron-technology-inc/MT40A512M8RH-083E-B/6024221
+    # https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/2583/MT40A1G4,%20512M8,%20256M16.pdf
+    ngroupbanks = 4
+    ngroups = 4
+    nbanks = ngroups * ngroupbanks
+    nrows = 32768
+    ncols = 1024
+    # timings
+    trefi = {"1x": 64e6/8192,   "2x": (64e6/8192)/2, "4x": (64e6/8192)/4}
+    # trefi = {"1x": 1e12, "2x": 10e12 / 2, "4x": 10e12 / 4}
+    trfc = {"1x": (None, 260), "2x": (None, 160), "4x": (None, 110)}
+    technology_timings = _TechnologyTimings(tREFI=trefi, tWTR=(2.5, 7.5),
+                                            tCCD=(4, None), tRRD=(3.7, 5.3),
+                                            tZQCS=(128, 128))
+    speedgrade_timings = {
+        "2133": _SpeedgradeTimings(tRP=15, tRCD=15, tWR=15, tRFC=trfc,
+                                   tFAW=(21, 25), tRAS=32),
+    }
+    speedgrade_timings["default"] = speedgrade_timings["2133"]
+
 # DDR4 (RDIMM) -------------------------------------------------------------------------------------
 
 class MTA18ASF2G72PZ(DDR4RegisteredModule):
